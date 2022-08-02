@@ -1,0 +1,90 @@
+Script started on 2022-05-09 02:52:39+0000
+luojq@OutGPU1:~/uploadP1/src$ bash run.sh 
+[ Using Seed :  99  ]
+DEBUG=False
+model=gatv2
+lr=0.0001
+batch_size=48
+optimizer=Adam
+aa_embed=protT5
+batch_hard=True
+exclude_easy=False
+parallel=True
+random_seed=99
+weight_decay=0.0001
+amp=False
+edge_type=8A
+description=GATv2 model, batch 48, edge_type=8A, add lr_scheduler
+Loaded info for n_proteins: 118539
+Finished parsing n_domains: 122726
+Total length of id2label: 118539
+##########
+Finished splitting data!
+Train set size: 71638
+Val set size: 196
+ValLookup20 size: 71638
+##########
+Finished parsing n_domains: 122726
+Total length of id2label: 71638
+
+Finished parsing n_domains: 122726
+Total length of id2label: 71834
+Let's use 8 GPUs!
+DataParallel(
+  (module): GATModel(
+    (conv1): GATv2Conv(1024, 128, heads=8)
+    (conv2): GATv2Conv(1024, 512, heads=1)
+    (linear): Sequential(
+      (0): Linear(in_features=512, out_features=128, bias=True)
+    )
+  )
+)
+###### Training parameters ######
+Experiment name: GATv2_8A_protT5_lr1e-4_lrs_bs8*48_s99
+LR: 0.0001, BS: 384, free Paras.: 3271296, n_epochs: 200
+#############################
+
+Start training now!
+New best performance found:  0.537!
+epoch [1/200], train loss: 0.697, train-time: 465.5[s], test-time: 157.7[s], ACC-C: 0.86, ACC-A: 0.61, ACC-T: 0.52, ACC-H: 0.54 ## Avg. Acc: 0.63
+New best performance found:  0.651!
+epoch [2/200], train loss: 0.693, train-time: 438.1[s], test-time: 144.1[s], ACC-C: 0.90, ACC-A: 0.73, ACC-T: 0.59, ACC-H: 0.65 ## Avg. Acc: 0.72
+New best performance found:  0.718!
+epoch [3/200], train loss: 0.692, train-time: 438.9[s], test-time: 145.3[s], ACC-C: 0.90, ACC-A: 0.76, ACC-T: 0.66, ACC-H: 0.72 ## Avg. Acc: 0.76
+New best performance found:  0.745!
+epoch [4/200], train loss: 0.692, train-time: 437.5[s], test-time: 142.7[s], ACC-C: 0.92, ACC-A: 0.79, ACC-T: 0.68, ACC-H: 0.74 ## Avg. Acc: 0.78
+New best performance found:  0.758!
+epoch [5/200], train loss: 0.692, train-time: 438.8[s], test-time: 144.6[s], ACC-C: 0.91, ACC-A: 0.77, ACC-T: 0.70, ACC-H: 0.76 ## Avg. Acc: 0.79
+epoch [6/200], train loss: 0.691, train-time: 438.6[s], test-time: 146.8[s], ACC-C: 0.91, ACC-A: 0.79, ACC-T: 0.71, ACC-H: 0.76 ## Avg. Acc: 0.79
+New best performance found:  0.772!
+epoch [7/200], train loss: 0.691, train-time: 438.6[s], test-time: 143.6[s], ACC-C: 0.91, ACC-A: 0.80, ACC-T: 0.72, ACC-H: 0.77 ## Avg. Acc: 0.80
+New best performance found:  0.785!
+epoch [8/200], train loss: 0.691, train-time: 437.0[s], test-time: 148.7[s], ACC-C: 0.93, ACC-A: 0.82, ACC-T: 0.74, ACC-H: 0.79 ## Avg. Acc: 0.82
+epoch [9/200], train loss: 0.691, train-time: 438.7[s], test-time: 145.4[s], ACC-C: 0.90, ACC-A: 0.79, ACC-T: 0.73, ACC-H: 0.77 ## Avg. Acc: 0.80
+epoch [10/200], train loss: 0.691, train-time: 437.9[s], test-time: 146.0[s], ACC-C: 0.92, ACC-A: 0.81, ACC-T: 0.73, ACC-H: 0.78 ## Avg. Acc: 0.81
+epoch [11/200], train loss: 0.691, train-time: 438.8[s], test-time: 146.6[s], ACC-C: 0.91, ACC-A: 0.81, ACC-T: 0.72, ACC-H: 0.77 ## Avg. Acc: 0.80
+epoch [12/200], train loss: 0.691, train-time: 435.8[s], test-time: 145.7[s], ACC-C: 0.93, ACC-A: 0.83, ACC-T: 0.73, ACC-H: 0.77 ## Avg. Acc: 0.81
+epoch [13/200], train loss: 0.691, train-time: 435.6[s], test-time: 145.8[s], ACC-C: 0.93, ACC-A: 0.80, ACC-T: 0.73, ACC-H: 0.77 ## Avg. Acc: 0.81
+New best performance found:  0.792!
+epoch [14/200], train loss: 0.691, train-time: 438.8[s], test-time: 146.9[s], ACC-C: 0.93, ACC-A: 0.82, ACC-T: 0.74, ACC-H: 0.79 ## Avg. Acc: 0.82
+epoch [15/200], train loss: 0.691, train-time: 439.2[s], test-time: 146.2[s], ACC-C: 0.92, ACC-A: 0.81, ACC-T: 0.73, ACC-H: 0.79 ## Avg. Acc: 0.81
+^CTraceback (most recent call last):
+  File "train.py", line 758, in <module>
+    main()
+  File "train.py", line 678, in main
+    loss = criterion(anchor, pos, neg, labels, epoch_monitor)
+  File "train.py", line 273, in __call__
+    dist_ap, dist_an = self.get_batch_hard(anchor, pos, neg, Y)
+  File "train.py", line 357, in get_batch_hard
+    pdist, y, mask_pos)
+  File "train.py", line 321, in get_hard_triplets
+    mask_neg[torch.eye(n).bool().cuda()] = 0
+KeyboardInterrupt
+luojq@OutGPU1:~/uploadP1/src$ exit
+exit
+
+Script done on 2022-05-09 05:36:11+0000
+
+TEST:
+ACC-C: 0.8894, ACC-A: 0.7596, ACC-T: 0.6583, ACC-H: 0.7676 ## Avg. Acc: 0.7687 (topk=30)
+ACC-C: 0.9183, ACC-A: 0.7692, ACC-T: 0.6734, ACC-H: 0.7746 ## Avg. Acc: 0.7839 (threshold=8A)
