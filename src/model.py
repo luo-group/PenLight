@@ -9,7 +9,6 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import torch_geometric
-from gvp import GVP, GVPConv, GVPConvLayer, LayerNorm, Dropout
 from torch_scatter import scatter_mean
 from torch_geometric.nn import GATConv, GATv2Conv, TransformerConv, GINEConv, global_mean_pool, NNConv, CGConv
 # import esm
