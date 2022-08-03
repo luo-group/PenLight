@@ -37,6 +37,7 @@
 ```
 
 ## Download Datasets
+- Complete preprocessed datasets can be found [here](https://drive.google.com/drive/folders/1k7uqPbsI6ZROcZYA_shmebXEnHh-q8dV?usp=sharing).
 - Download preprocessed data for CATH prediction from [data-cath](), unzip the downloaded directory and replace `./data-cath` with it.
 - Download preprocessed data for EC prediction from [data-ec](), unzip the downloaded directory and replace `./data-ec` with it.
 - Note: If you want to train your own PenLight models, you must download the above datasets, unzip them and replace the current ./data-cath and ./data-ec directories. If you only want to make predictions and infer annotations for proteins with our pretrained models, you don't have to download the datasets.
