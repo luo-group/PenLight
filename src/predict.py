@@ -144,6 +144,8 @@ def get_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('--model', help='model name for prediction', type=str, default='cath-GATv2', choices=['cath-GATv2', 'ec-GATv2.01'])
     parser.add_argument('--task', help='cath or ec', type=str, default='cath', choices=['cath', 'ec'])
+    parser.add_argument('--input', help='input json file', type=str, default='../data-cath/splits_json/test.json')
+    parser.add_argument('--output', help='output file', type=str, default='output.txt')
     args = parser.parse_args()
     return args
 
@@ -169,7 +171,7 @@ if __name__ == '__main__':
     test_ids = get_test_ids(data_dir / 'splits_json/test.json')
     lookup_file = os.path.join(model_dir, f'emb_lookup.pt')
     id2pred = get_id2pred(os.path.join(model_dir, f'emb_test.pt'), lookup_file, gt_table)
-    with open(f'{args.task}-predictions.txt', 'w') as f:
+    with open(args.output, 'w') as f:
         f.write('ID\tPrediction\n')
         for k, v in id2pred.items():
             f.write(f'{k}\t{".".join(v)}\n')
