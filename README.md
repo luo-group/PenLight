@@ -1,5 +1,7 @@
 # PenLight
 
+This is the official repository for **Contrastive learning of protein representations with graph neural networks for structural and functional annotations**[[link](https://doi.org/10.1142/9789811270611_0011)]. 
+
 ## Requirements
 - pytorch
 - torch_geometric
@@ -55,14 +57,14 @@ python train.py --experiment ec-demo --model gatv2.01 --aa_embed esm --batch_har
 ```
 
 ### Prediction
-Two pretrained models cath-GATv2 (for CATH) and ec-GATv2.01 (for EC) are already stored in `./log` directory and can be used to infer annotations for json-format input files as follows. We provided two preprocessed json files ../data-cath/splits_json/test.json and ../data-ec/splits_json/test.json as demonstration.
+Two pretrained models cath-GATv2 (for CATH) and ec-GATv2.01 (for EC) are already stored in `./log` directory and can be used to infer annotations for json-format input files as follows. We provided two preprocessed json files ../data-cath/splits_json/test.json and ../data-ec/splits_json/test.json as demonstration. To use custom test set, you'll need to generate a corresponding embedding file with `.pt` file type.  A custom lookup set is also available, which also requires a corresponding embedding file. Please refer to `results.py` about how to generate the embedding files.
 
 Predict CATH annotations
 ```
-python predict.py --model cath-GATv2 --task cath --input ../data-cath/splits_json/test.json --output cath-pred.txt
+python predict.py --model cath-GATv2 --task cath --input ../data-cath/splits_json/test.json --output cath-pred.txt --test_emb ../log/cath-GATv2/emb_test.pt
 ```
 
 Predict EC annotations
 ```
-python predict.py --model ec-GATv2.01 --task ec --input ../data-ec/splits_json/test.json --output ec-pred.txt
+python predict.py --model ec-GATv2.01 --task ec --input ../data-ec/splits_json/test.json --output ec-pred.txt --test_emb ../log/ec-GATv2.01/emb_test.pt
 ```
