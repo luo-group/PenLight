@@ -146,6 +146,9 @@ def get_args():
     parser.add_argument('--task', help='cath or ec', type=str, default='cath', choices=['cath', 'ec'])
     parser.add_argument('--input', help='input json file', type=str, default='../data-cath/splits_json/test.json')
     parser.add_argument('--output', help='output file', type=str, default='output.txt')
+    parser.add_argument('--lookup_emb', help='lookup protein embedding path', type=str, default='../log/cath-GATv2/emb_lookup.pt')
+    parser.add_argument('--test_emb', help='test protein embedding path', type=str, default='../log/cath-GATv2/emb_test.pt')
+    parser.add_argument('--use_custom_lookup', help='activate this to use personally generated lookup embeddings', action='store_true')
     args = parser.parse_args()
     return args
 
@@ -168,9 +171,16 @@ if __name__ == '__main__':
     else:
         raise NotImplementedError
     print(f'Predicting using model: {args.model}')
-    test_ids = get_test_ids(data_dir / 'splits_json/test.json')
-    lookup_file = os.path.join(model_dir, f'emb_lookup.pt')
-    id2pred = get_id2pred(os.path.join(model_dir, f'emb_test.pt'), lookup_file, gt_table)
+    # test_ids = get_test_ids(data_dir / 'splits_json/test.json')
+    test_ids = get_test_ids(args.input)
+    # lookup_file = os.path.join(model_dir, f'emb_lookup.pt')
+    if args.use_custom_lookup:
+        lookup_file = args.lookup_emb
+    else:
+        lookup_file = os.path.join(model_dir, f'emb_lookup.pt')
+
+    id2pred = get_id2pred(args.test_emb, lookup_file, gt_table)
+    # id2pred = get_id2pred(os.path.join(model_dir, f'emb_test.pt'), lookup_file, gt_table)
     with open(args.output, 'w') as f:
         f.write('ID\tPrediction\n')
         for k, v in id2pred.items():
