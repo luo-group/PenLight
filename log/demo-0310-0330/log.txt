@@ -1,0 +1,16 @@
+2023-03-10 03:31:41,880 - Training on single GPU!
+2023-03-10 03:31:42,743 - GATModel_clean(
+  (conv1): GATv2Conv(1280, 128, heads=8)
+  (conv2): GATv2Conv(1024, 512, heads=1)
+  (linear): Linear(in_features=512, out_features=128, bias=True)
+)
+2023-03-10 03:31:42,744 - Experiment name: demo-0310-0330
+2023-03-10 03:31:42,744 - LR: 0.0001, BS: 32, free Paras.: 3795584, n_epochs: 200
+2023-03-10 03:32:01,677 - New best performance found! acc-0=0.8279445727482679
+2023-03-10 03:33:22,134 - Epoch [1/200]: loss: 0.6446; acc-0: 0.8279445727482679; train time: 1[min]20[sec]
+2023-03-10 03:35:00,895 - Epoch [2/200]: loss: 0.5904; acc-0: 0.8071593533487298; train time: 1[min]20[sec]
+2023-03-10 03:36:38,029 - Epoch [3/200]: loss: 0.5458; acc-0: 0.8175519630484989; train time: 1[min]16[sec]
+2023-03-10 03:38:09,249 - Epoch [4/200]: loss: 0.5343; acc-0: 0.8083140877598153; train time: 1[min]13[sec]
+2023-03-10 03:39:45,665 - Epoch [5/200]: loss: 0.5126; acc-0: 0.825635103926097; train time: 1[min]17[sec]
+2023-03-10 03:41:19,914 - Epoch [6/200]: loss: 0.4988; acc-0: 0.8071593533487298; train time: 1[min]16[sec]
+2023-03-10 03:42:57,144 - Epoch [7/200]: loss: 0.4927; acc-0: 0.8187066974595842; train time: 1[min]20[sec]

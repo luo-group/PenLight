@@ -3,6 +3,7 @@ import numpy as np
 import seaborn as sn
 import torch
 import random
+import logging
 
 amino_acids = ['A', 'R', 'N', 'D', 'C', 'Q', 'E', 'G', 'H', 'I', 'L', 'K', 'M', 'F', 'P', 'S', 'T', 'W', 'Y', 'V']
 
@@ -212,7 +213,12 @@ def init_monitor():
 def toCPU(data):
     return data.cpu().detach().numpy()
 
-
 # count number of free parameters in the network
 def count_parameters(model):
     return sum(p.numel() for p in model.parameters() if p.requires_grad)
+
+def sec2min_sec(t):
+    mins = int(t) // 60
+    secs = int(t) % 60
+    
+    return f'{mins}[min]{secs}[sec]'

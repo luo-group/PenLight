@@ -11,14 +11,15 @@ from datasets import _normalize
 from embedders import ESMEmbedder, ProtTransEmbedder
 
 emb_dir = "../data/embedding/"
-emb_file = h5py.File('../data/protT5.hdf5', 'r') # Changed for EC
+# emb_file = h5py.File('../data/protT5.hdf5', 'r') # Changed for EC
 # emb_file = h5py.File('../ec_data/ec_esm1b.h5', 'r') 
 # emb_file = h5py.File('../ec_data/ec_prott5.h5', 'r')
 # emb_file = h5py.File('/data1/luojq/uploadP1/data/esm1b_padded.hdf5', 'r')
 # emb_file = h5py.File('../go_data/go_esm1b.h5', 'r')
+
 acc_times = [0 for i in range(10)]
 
-
+'''
 class GATModel(nn.Module):
     def __init__(self, in_channel=1024, hidden_channel=128, edge_dim=35, heads=8, drop_rate=0.5, node_emb=True, version=2):
         """
@@ -284,11 +285,13 @@ class GATModel(nn.Module):
                                X.seq_neg, X.x_neg_batch if hasattr(X, 'x_neg_batch') else None)
 
         return anchor, pos, neg
+'''
 
 # TODO: rewrite GATModel
-class GATModel2(nn.Module):
+class GATModel_clean(nn.Module):
     def __init__(self, 
-                 embedder='prott5',
+                 embedder='esm1b',
+                 emb_file='data/ec-data/ec_esm1b.h5',
                  in_channels=1024,
                  hidden_channels=[128, 512],
                  out_dim=128,
@@ -297,11 +300,12 @@ class GATModel2(nn.Module):
                  drop_rate=0.5,
                  append_scalar_features=False,
                  device=None):
-        super(GATModel2, self).__init__()
+        super(GATModel_clean, self).__init__()
+        self.emb_file = h5py.File(emb_file)
         self.append_scalar_features = append_scalar_features
 
         self.conv1 = GATv2Conv(in_channels, hidden_channels[0], heads=heads[0], dropout=drop_rate, edge_dim=edge_dim)
-        self.conv2 = GATv2Conv(hidden_channels[0] * heads, hidden_channels[1], heads=heads[1], dropout=drop_rate, edge_dim=edge_dim)
+        self.conv2 = GATv2Conv(hidden_channels[0] * heads[0], hidden_channels[1], heads=heads[1], dropout=drop_rate, edge_dim=edge_dim)
         self.linear = nn.Linear(hidden_channels[-1] * heads[-1], out_dim)
 
         # if embedder == 'prott5':
@@ -310,21 +314,21 @@ class GATModel2(nn.Module):
         #     self.embedder = ESMEmbedder()
 
     def forward(self, X):
-        anchor = self.single_pass(X.x_anchor, X.edge_index_anchor, X.edge_attr_anchor, X.name_anchor, X.seq_anchor, X.x_anchor_batch if hasattr(X, 'x_anchor_batch') else None)
-        pos = self.single_pass(X.x_pos, X.edge_index_pos, X.edge_attr_pos, X.name_pos, X.seq_pos, X.x_pos_batch if hasattr(X, 'x_pos_batch') else None)
-        neg = self.single_pass(X.x_neg, X.edge_index_neg, X.edge_attr_neg, X.name_neg, X.seq_neg, X.x_neg_batch if hasattr(X, 'x_neg_batch') else None)
+        anchor = self.single_pass(X.x_anchor, X.edge_index_anchor, X.edge_attr_anchor, X.name_anchor, X.x_anchor_batch if hasattr(X, 'x_anchor_batch') else None)
+        pos = self.single_pass(X.x_pos, X.edge_index_pos, X.edge_attr_pos, X.name_pos, X.x_pos_batch if hasattr(X, 'x_pos_batch') else None)
+        neg = self.single_pass(X.x_neg, X.edge_index_neg, X.edge_attr_neg, X.name_neg, X.x_neg_batch if hasattr(X, 'x_neg_batch') else None)
 
         return anchor, pos, neg
 
-    def single_pass(self, x, edge_index, edge_attr, name, seq, batch=None):
+    def single_pass(self, x, edge_index, edge_attr, name, batch=None):
         if batch is not None:
             embeddings = []
             for idx, i in enumerate(name):
-                emb = torch.tensor(emb_file[i][()])
+                emb = torch.tensor(self.emb_file[i][()])
                 embeddings.append(emb)
             embeddings = torch.cat(embeddings, dim=0).to(x.device).to(x.dtype)
         else:
-            embeddings = torch.tensor(emb_file[name][()])
+            embeddings = torch.tensor(self.emb_file[name][()])
             if len(embeddings) < len(x):
                 padding = torch.zeros((len(x) - len(embeddings), embeddings.shape[-1]))
                 embeddings = torch.cat([embeddings, padding], dim=0)

@@ -1,0 +1,8 @@
+2023-03-10 03:23:06,687 - Training on single GPU!
+2023-03-10 03:23:07,471 - GATModel_clean(
+  (conv1): GATv2Conv(1280, 128, heads=8)
+  (conv2): GATv2Conv(1024, 512, heads=1)
+  (linear): Linear(in_features=512, out_features=128, bias=True)
+)
+2023-03-10 03:23:07,472 - Experiment name: demo-0310-0322
+2023-03-10 03:23:07,472 - LR: 0.0001, BS: 32, free Paras.: 3795584, n_epochs: 200

@@ -26,7 +26,7 @@ class TripletLoss(object):
             self.ranking_loss = nn.SoftMarginLoss(reduction=self.reduction)
         self.device = device
 
-    def __call__(self, anchor, pos, neg, Y, monitor):
+    def __call__(self, anchor, pos, neg, Y):
         if self.batch_hard:
             dist_ap, dist_an = self.get_batch_hard(anchor, pos, neg, Y)
             dist_ap, dist_an = dist_ap.to(torch.float64), dist_an.to(torch.float64)
@@ -46,15 +46,15 @@ class TripletLoss(object):
 
         loss = loss.to(torch.float32)
         embeddings = torch.cat((anchor, pos, neg))
-        monitor['pos'].append(toCPU(dist_ap.mean()))
-        monitor['neg'].append(toCPU(dist_an.mean()))
+        # monitor['pos'].append(toCPU(dist_ap.mean()))
+        # monitor['neg'].append(toCPU(dist_an.mean()))
 
-        monitor['min'].append(toCPU(embeddings.min(dim=1)[0].mean()))
-        monitor['max'].append(toCPU(embeddings.max(dim=1)[0].mean()))
-        monitor['mean'].append(toCPU(embeddings.mean(dim=1).mean()))
+        # monitor['min'].append(toCPU(embeddings.min(dim=1)[0].mean()))
+        # monitor['max'].append(toCPU(embeddings.max(dim=1)[0].mean()))
+        # monitor['mean'].append(toCPU(embeddings.mean(dim=1).mean()))
 
-        monitor['loss'].append(toCPU(loss))
-        monitor['norm'].append(toCPU(torch.norm(embeddings, p='fro')))
+        # monitor['loss'].append(toCPU(loss))
+        # monitor['norm'].append(toCPU(torch.norm(embeddings, p='fro')))
 
         return loss
 
