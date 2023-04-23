@@ -1,5 +1,5 @@
 # PenLight
-This is the official repository for **Contrastive learning of protein representations with graph neural networks for structural and functional annotations**[[link](https://doi.org/10.1142/9789811270611_0011). Compared to our original implementation (which is now moved to the `original` branch), this branch has an optimized code structure and supports multilabel training and inference for EC number predictions.
+This is the official repository for **Contrastive learning of protein representations with graph neural networks for structural and functional annotations**[[link](https://doi.org/10.1142/9789811270611_0011)]. Compared to our original implementation (which is now moved to the `original` branch), this branch has an optimized code structure and supports multilabel training and inference for EC number predictions.
 - [PenLight](#penlight)
   - [Overview](#overview)
   - [Requirements](#requirements)
