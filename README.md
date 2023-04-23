@@ -25,14 +25,14 @@ This is the official repository for **Contrastive learning of protein representa
 
 ## Datasets
 ### CATH Dataset
-All datasets used in this project are in json format. Each json file contains a dictionary like this: `{"id": {"ec"/"cath": [1.1.1.1], "coordinates": {"N": [], "CA": [], "C": [], "O": []}}}`. 
+All datasets used in this project are in json format. Each json file contains a dictionary like this: `{"id": {"ec"/"cath": [1.1.1.1], "coordinates": {"N": [], "CA": [], "C": [], "O": []}, "seq": "MKIRSQ..."}}`. 
 
-For CATH prediction, we used the dataset from [ProtTucker](https://www.biorxiv.org/content/10.1101/2021.11.14.468528v1).
+For CATH prediction, we followed the data split method from [ProtTucker](https://www.biorxiv.org/content/10.1101/2021.11.14.468528v1). Our CATH dataset can be downloaded from [Google Drive](https://drive.google.com/file/d/1QtNKcaGM6opncR6_y-ZPwG7kcPIOaAVx/view?usp=sharing)
 
 ### EC Dataset
 For EC number prediction, we used the dataset from [DeepFRI](https://www.nature.com/articles/s41467-021-23303-9).
 
-Preprocessed dataset files can be downloaded from [link]().
+Our EC dataset can be downloaded from [Google Drive](https://drive.google.com/file/d/1Bh0S9EiqSyaNMU5SFHTpy6LcN2k6rq6P/view?usp=sharing).
 
 ## Training
 We use yml files to store training configurations. To train a new model from scratch, you can use the following cammand:
