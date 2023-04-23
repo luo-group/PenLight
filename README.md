@@ -1,6 +1,16 @@
 # PenLight
+This is the official repository for **Contrastive learning of protein representations with graph neural networks for structural and functional annotations**[[link](https://doi.org/10.1142/9789811270611_0011)]. Compared to our original implementation, this branch has an optimized code structure and supports multilabel training and inference for EC number predictions.
+- [PenLight](#penlight)
+  - [Overview](#overview)
+  - [Requirements](#requirements)
+  - [Datasets](#datasets)
+  - [Training](#training)
+  - [Prediction](#prediction)
+  - [Citation](#citation)
+  - [Contact](#contact)
 
-This is the official repository for **Contrastive learning of protein representations with graph neural networks for structural and functional annotations**[[link](https://doi.org/10.1142/9789811270611_0011)]. 
+## Overview
+![overview](assets/overview.png)
 
 ## Requirements
 - pytorch
@@ -13,58 +23,43 @@ This is the official repository for **Contrastive learning of protein representa
 - seaborn
 - numpy
 
-## Directories
-```
-.
-├── data-cath
-│   ├── cath-domain-list-S100.txt
-│   └── splits_json
-│       └── test.json
-├── data-ec
-│   ├── pdb_ec_chain.txt
-│   └── splits_json
-│       └── test.json
-├── LICENSE
-├── log
-│   ├── cath-GATv2/
-│   └── ec-GATv2.01/
-├── README.md
-└── src
-    ├── datasets.py
-    ├── model.py
-    ├── predict.py
-    ├── run.sh
-    ├── train.py
-    └── utils.py
-```
+## Datasets
+### CATH Dataset
+All datasets used in this project are in json format. Each json file contains a dictionary like this: `{"id": {"ec"/"cath": [1.1.1.1], "coordinates": {"N": [], "CA": [], "C": [], "O": []}}}`. 
 
-## Download Datasets
-- Complete preprocessed datasets can be found [here](https://drive.google.com/drive/folders/1k7uqPbsI6ZROcZYA_shmebXEnHh-q8dV?usp=sharing).
-- Download preprocessed data for CATH prediction from [data-cath](), unzip the downloaded directory and replace `./data-cath` with it.
-- Download preprocessed data for EC prediction from [data-ec](), unzip the downloaded directory and replace `./data-ec` with it.
-- Note: If you want to train your own PenLight models, you must download the above datasets, unzip them and replace the current ./data-cath and ./data-ec directories. If you only want to make predictions and infer annotations for proteins with our pretrained models, you don't have to download the datasets.
+For CATH prediction, we used the dataset from [ProtTucker](https://www.biorxiv.org/content/10.1101/2021.11.14.468528v1).
+
+### EC Dataset
+For EC number prediction, we used the dataset from [DeepFRI](https://www.nature.com/articles/s41467-021-23303-9).
+
+Preprocessed dataset files can be downloaded from [link]().
 
 ## Training
+We use yml files to store training configurations. To train a new model from scratch, you can use the following cammand:
+```
+python train.py --config log/demo/config.yml
+```
+You can use `python train.py -h` to get the details about the configuration parameters.
 
-Train a model for CATH
+## Prediction
+To make predictions using pretrained models, you can use the following command: 
 ```
-python train.py --experiment cath-demo --model gatv2 --aa_embed protT5 --batch_hard --task cath --parallel
+python predict.py --config config_file --model model_checkpoint --lookupset lookupset --input input_dataset_file --output results.json
+```
+The config file should be the same file used for training the model checkpoint.
+
+## Citation
+>Luo J, Luo Y. Contrastive learning of protein representations with graph neural networks for structural and functional annotations[C]//PACIFIC SYMPOSIUM ON BIOCOMPUTING 2023: Kohala Coast, Hawaii, USA, 3–7 January 2023. 2022: 109-120. https://doi.org/10.1142/9789811270611_0011
+```
+@inproceedings{luo2022contrastive,
+  title={Contrastive learning of protein representations with graph neural networks for structural and functional annotations},
+  author={Luo, Jiaqi and Luo, Yunan},
+  booktitle={PACIFIC SYMPOSIUM ON BIOCOMPUTING 2023: Kohala Coast, Hawaii, USA, 3--7 January 2023},
+  pages={109--120},
+  year={2022},
+  organization={World Scientific}
+}
 ```
 
-Train a model for EC prediction
-```
-python train.py --experiment ec-demo --model gatv2.01 --aa_embed esm --batch_hard --task ec --parallel
-```
-
-### Prediction
-Two pretrained models cath-GATv2 (for CATH) and ec-GATv2.01 (for EC) are already stored in `./log` directory and can be used to infer annotations for json-format input files as follows. We provided two preprocessed json files ../data-cath/splits_json/test.json and ../data-ec/splits_json/test.json as demonstration. To use custom test set, you'll need to generate a corresponding embedding file with `.pt` file type.  A custom lookup set is also available, which also requires a corresponding embedding file. Please refer to `results.py` about how to generate the embedding files.
-
-Predict CATH annotations
-```
-python predict.py --model cath-GATv2 --task cath --input ../data-cath/splits_json/test.json --output cath-pred.txt --test_emb ../log/cath-GATv2/emb_test.pt
-```
-
-Predict EC annotations
-```
-python predict.py --model ec-GATv2.01 --task ec --input ../data-ec/splits_json/test.json --output ec-pred.txt --test_emb ../log/ec-GATv2.01/emb_test.pt
-```
+## Contact
+Please submit GitHub issues or contact Jiaqi Luo (luojiaqi2019@gmail.com) for any questions related to the source code.
