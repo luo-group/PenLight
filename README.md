@@ -48,11 +48,7 @@ python train.py --config log/demo/config.yml
 You can use `python train.py -h` to get the details about the configuration parameters.
 
 ## Prediction
-To make predictions using pretrained models, you can use the following command: 
-```
-python predict.py --config config_file --model model_checkpoint --lookupset lookupset --input input_dataset_file --output results.json
-```
-The config file should be the same file used for training the model checkpoint.
+To make predictions using pretrained models, please refer to this [issue](https://github.com/luo-group/PenLight/issues/2)
 
 ## Citation
 >Luo J, Luo Y. Contrastive learning of protein representations with graph neural networks for structural and functional annotations[C]//PACIFIC SYMPOSIUM ON BIOCOMPUTING 2023: Kohala Coast, Hawaii, USA, 3–7 January 2023. 2022: 109-120. https://doi.org/10.1142/9789811270611_0011

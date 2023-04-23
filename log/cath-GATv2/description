@@ -1,0 +1,13 @@
+model=gatv2
+lr=0.0001
+batch_size=48
+optimizer=Adam
+aa_embed=protT5
+batch_hard=True
+exclude_easy=False
+parallel=True
+random_seed=99
+weight_decay=0.0001
+amp=False
+edge_type=8A
+description=GATv2 model, batch 48, edge_type=8A, add lr_scheduler
