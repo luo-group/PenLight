@@ -162,5 +162,8 @@ cython_debug/
 data-ec/splits_json_multilabel
 src/tmp.py
 baseline*
-data/*
+data/*_data
+data/*.zip
+data/*.py
+data/*-data
 tmp.py
